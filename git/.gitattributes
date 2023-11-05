@@ -1,0 +1,7 @@
+*.c     diff=cpp
+*.c++   diff=cpp
+*.cpp   diff=cpp
+*.go    diff=golang
+*.py    diff=python
+*.md    diff=markdown
+*.rs    diff=rust

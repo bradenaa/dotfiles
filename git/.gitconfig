@@ -1,0 +1,10 @@
+[core]
+	excludesfile = ~/.gitignore
+	attributesFile = ~/.gitattributes
+[alias]
+	l = log --graph --oneline --decorate
+	ll = log --stat --decorate --source -p
+[color]
+	ui = auto
+[include]
+	path = ~/.gitconfig.local
