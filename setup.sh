@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # Load each of the tools.
 for file in ./functions/*; do
     [ -e "$file" ] || continue
