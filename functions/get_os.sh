@@ -1,16 +1,21 @@
+#!/usr/bin/env bash
+
 # Echo's the operating system, simplified to:
 # - osx
 # - ubuntu
+# - linux
 get_os() {
     # Identify the operating system.
-    local un=$(uname -a)
+    local name=$(uname -a)
     os="unknown"
-    if [[ "$un" =~ [Dd]arwin ]]; then
+    if [[ "$name" =~ [Dd]arwin ]]; then
         echo "osx"
-    elif [[ "$un" =~ [Uu]buntu ]]; then
+    elif [[ "$name" =~ [Uu]buntu ]]; then
         echo "ubuntu"
+    elif [[ "$name" =~ [[Ll]]inux ]]; then
+        echo "linux"
     else
-        logger -s "Unable to idenfify operating system from uname '$un'"
+        logger -s "Unable to idenfify operating system from uname '$name'"
         exit 1
     fi
 }

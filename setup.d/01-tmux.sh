@@ -3,7 +3,7 @@ if ask "$os: Install/Update tmux?" Y; then
     if [[ "$os" == "osx" ]]; then
         echo "$os: Updating tmux..."
         brew install tmux
-    elif [[ "$os" == "ubuntu" ]]; then
+    elif [[ "$os" == "ubuntu" ]] || [[ "$os" == "linux" ]]; then
         echo "$os: Updating tmux..."
         sudo apt-get install -y tmux
     fi
