@@ -12,7 +12,7 @@ get_os() {
         echo "osx"
     elif [[ "$name" =~ [Uu]buntu ]]; then
         echo "ubuntu"
-    elif [[ "$name" =~ [[Ll]]inux ]]; then
+    elif [[ "$name" =~ [Ll]inux ]]; then
         echo "linux"
     else
         logger -s "Unable to idenfify operating system from uname '$name'"
