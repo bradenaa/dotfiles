@@ -7,7 +7,7 @@ if ask "$os: Install/Update tmux?" Y; then
         echo "$os: Updating tmux..."
         sudo apt-get install -y tmux
     fi
-    ensure_symlink "$(pwd)/tmux/tmux.conf" "$HOME/.tmux.conf"
+    ensure_symlink "$(pwd)/tmux/.tmux.conf" "$HOME/.tmux.conf"
 fi
 
 # Install the TMux Plugin Manager.
