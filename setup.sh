@@ -11,6 +11,7 @@ done
 # Get the operating system, output it. The script will terminate if the OS
 # cannot be categorically identified.
 os=$(get_os)
+dotfile_root=$(pwd)
 echo "os identified as: $os"
 
 # Run each of the setup files.
