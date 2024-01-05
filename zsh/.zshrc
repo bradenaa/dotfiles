@@ -3,6 +3,8 @@ export GIT_EDITOR=vim
 export EDITOR=vim
 ZSH_THEME="robbyrussell"
 
+set -o vi
+
 plugins=(git vi-mode)
 
 HISTFILE=~/.zsh_history
