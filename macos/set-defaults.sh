@@ -17,8 +17,8 @@ defaults write com.apple.Dock autohide-time-modifier -float 0; killall Dock
 defaults write com.apple.Dock tilesize -int 35
 
 # Set a blazingly fast keyboard repeat rate
-defaults write NSGlobalDomain KeyRepeat -int 1 # normal minimum is 2 (30 ms)
-defaults write NSGlobalDomain InitialKeyRepeat -int 10 # normal minimum is 15 (225 ms)
+defaults write NSGlobalDomain KeyRepeat -int 2 # normal minimum is 2 (30 ms)
+defaults write NSGlobalDomain InitialKeyRepeat -int 15 # normal minimum is 15 (225 ms)
 
 # Disable shadow in screenshots
 defaults write com.apple.screencapture disable-shadow -bool true

@@ -1,0 +1,11 @@
+{
+  "search.exclude": {
+    "**/node_modules": true
+  },
+  "[yaml]": {
+    "editor.formatOnSave": false
+  },
+  "editor.formatOnSave": true,
+  "editor.lineNumbers": "relative",
+  "editor.scrollBeyondLastLine": false
+}
