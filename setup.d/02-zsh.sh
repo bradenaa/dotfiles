@@ -31,3 +31,4 @@ install_zsh () {
 }
 
 install_zsh
+ensure_symlink "$(pwd)/zsh/.zshrc" "$HOME/.zshrc"
