@@ -1,6 +1,7 @@
 [core]
 	excludesfile = ~/.gitignore
 	attributesFile = ~/.gitattributes
+	pager = less -X -F
 [alias]
 	l = log --graph --oneline --decorate
 	ll = log --stat --decorate --source -p
