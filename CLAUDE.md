@@ -13,11 +13,26 @@ The repo is expected to be cloned at `~/code/dotfiles` on every machine.
 ## Layout
 
 - `flake.nix`: inputs and one `homeConfigurations.<name>` per machine via `mkHome`.
-- `home/common.nix`: packages and config links shared by all machines. Most changes go here.
-- `home/linux.nix`, `home/darwin.nix`: OS-specific additions.
-- `nvim/`: Neovim config (see below). Linked to `~/.config/nvim`.
-- `tmux/`, `zsh/`, `git/`, `vim/`, `vscode/`, `macos/`: older configs. Not yet managed by home-manager.
-- `setup.sh`, `setup.d/`, `Makefile`: legacy apt/brew installer. Being replaced by home-manager; don't extend it.
+- `home/common.nix`: packages (toolchains, LSPs, formatters) and the nvim link. Imports the modules below.
+- `home/shell.nix`: zsh, starship, ghostty, prettier links; ssh client config.
+- `home/git.nix`: git config, global ignores and attributes (`programs.git`).
+- `home/tmux.nix`: tmux options and plugins (`programs.tmux`).
+- `home/linux.nix`, `home/darwin.nix`: OS-specific additions (ssh-agent, GNU coreutils on macOS, etc.).
+- Config files, one directory per tool: `nvim/`, `zsh/` (`zshenv`, `zshrc`), `tmux/tmux.conf`, `starship/`, `ghostty/`, `prettier/`.
+- `macos/set-defaults.sh`: macOS `defaults write` script, run by hand. `adv360/`: keyboard layout notes. `vscode/`: unmanaged.
+
+### Which files are live vs. built
+
+| File | How it's applied | Edit takes effect |
+|---|---|---|
+| `nvim/`, `zsh/*`, `starship/`, `ghostty/`, `prettier/` | symlinked to the checkout | immediately (new shell / reload) |
+| `tmux/tmux.conf` | read into the generated `~/.config/tmux/tmux.conf` | after `switch`, then `tmux source ~/.config/tmux/tmux.conf` |
+| git, ssh config | generated from `home/*.nix` | after `switch` |
+
+### Machine-specific settings
+
+- Shell: `~/.config/zsh/local.zsh` (untracked, sourced last by `zshrc`), e.g. project SDK paths or tools installed outside Nix.
+- Git: `~/.gitconfig.local` (untracked, included by the generated config), or a module in the machine's `mkHome` entry for things worth committing (e.g. work email via `programs.git.settings.user.email`).
 
 ## Applying changes
 
@@ -27,7 +42,11 @@ nix flake update                                      # bump all pinned versions
 home-manager switch --rollback                        # undo last switch
 ```
 
-- Configs are linked with `mkOutOfStoreSymlink` (the `link` helper in `home/common.nix`), pointing at the repo checkout. Edits to linked files apply immediately; only package or link changes need a `switch`.
+- Configs are linked with `mkOutOfStoreSymlink` (the `link` helper in `home/common.nix` / `home/shell.nix`), pointing at the repo checkout. Edits to linked files apply immediately; package, link and `home/*.nix` changes need a `switch`.
+- If a `switch` reports that an existing file would be clobbered, rerun with `-b backup` to move it aside.
+- tmux plugins are loaded by `home/tmux.nix` *after* `tmux/tmux.conf` (not via home-manager's `plugins` option, which loads them first). prefix-highlight and continuum rewrite `status-right`, so it must be set before they run.
+- zsh is the system zsh (login shell); only its config is managed. `zsh/zshenv` sources the Nix profile and `hm-session-vars.sh` so non-interactive shells see Nix tools too.
+- Rust comes from `rustup` (run `rustup default stable && rustup component add rust-analyzer` once per machine). Don't add `rustfmt`/`rust-analyzer` packages; they collide with rustup's proxies.
 - New files must be `git add`ed before Nix can see them (flakes only read tracked files).
 - The Intel Mac uses `nixpkgs-26.05-darwin` because nixpkgs dropped x86_64-darwin after 26.05. Packages added to `common.nix` must also exist there.
 - `terraform` is unfree and allowed by name in `flake.nix`. Add other unfree packages there too.

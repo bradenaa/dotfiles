@@ -1,0 +1,41 @@
+# Linked to $ZDOTDIR/.zshrc by home-manager. Environment lives in zshenv.
+
+# macOS runs path_helper from /etc/zprofile after .zshenv, which moves system
+# dirs ahead of ours. Put ours back in front.
+if [[ $OSTYPE == darwin* ]]; then
+  path=(~/.local/bin ~/.cargo/bin ~/.nix-profile/bin /nix/var/nix/profiles/default/bin $path)
+fi
+
+# History (size and file are set in zshenv)
+setopt SHARE_HISTORY        # write immediately and share between sessions
+setopt EXTENDED_HISTORY     # record timestamps
+setopt HIST_IGNORE_ALL_DUPS # drop older duplicates
+setopt HIST_FIND_NO_DUPS    # skip duplicates when searching
+setopt HIST_IGNORE_SPACE    # don't record commands starting with a space
+setopt HIST_SAVE_NO_DUPS
+setopt COMPLETE_ALIASES
+unsetopt BEEP
+
+# Vi mode
+bindkey -v
+bindkey -M viins '^?' backward-delete-char
+bindkey -M viins '^H' backward-delete-char
+
+# Completion, including completions shipped with Nix packages
+fpath=(~/.nix-profile/share/zsh/site-functions $fpath)
+autoload -Uz compinit
+compinit
+
+# fzf key bindings (Ctrl-R, Ctrl-T, Alt-C) and fuzzy completion
+source <(fzf --zsh)
+
+# Aliases. GNU ls flags; on macOS GNU coreutils comes from Nix.
+alias ..='cd ..'
+alias ls='ls -CF --color=auto'
+alias ll='ls -AlhXF --color=auto --show-control-chars --group-directories-first'
+alias grep='grep --color=auto'
+
+eval "$(starship init zsh)"
+
+# Machine-specific settings (not in the repo).
+[[ -r $ZDOTDIR/local.zsh ]] && source $ZDOTDIR/local.zsh
