@@ -15,7 +15,7 @@ require('conform').setup {
     go = { 'goimports', 'gofumpt' },
     lua = { 'stylua' },
     markdown = { 'prettier', 'markdownlint-cli2' },
-    python = { 'isort', 'black' },
+    python = { 'ruff_organize_imports', 'ruff_format' },
     rust = { 'rustfmt' },
     terraform = { 'terraform_fmt' },
     tf = { 'terraform_fmt' },
