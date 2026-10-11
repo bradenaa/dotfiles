@@ -58,16 +58,15 @@ in
     gopls
     lua-language-server
     marksman
-    pyright
+    ruff # also the python formatter
     terraform-ls
+    ty
     typescript-language-server
     vscode-langservers-extracted # html
 
     # Formatters and linters (used in nvim/lua/plugins/format.lua)
-    black
     gofumpt
     gotools # goimports
-    isort
     markdownlint-cli2
     prettier
     stylua

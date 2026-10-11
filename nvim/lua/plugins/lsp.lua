@@ -17,10 +17,11 @@ vim.lsp.enable {
   'html',
   'lua_ls',
   'marksman',
-  'pyright',
+  'ruff',
   'rust_analyzer',
   'terraformls',
   'ts_ls',
+  'ty',
 }
 
 vim.diagnostic.config {
