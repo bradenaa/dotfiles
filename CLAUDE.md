@@ -20,6 +20,7 @@ The clone location can differ per machine. Each `mkHome` entry sets `dotfiles` t
 - `home/linux.nix`, `home/darwin.nix`: OS-specific additions (ssh-agent, GNU coreutils on macOS, etc.).
 - Config files, one directory per tool: `nvim/`, `zsh/` (`zshenv`, `zshrc`), `tmux/tmux.conf`, `starship/`, `ghostty/`, `prettier/`.
 - `macos/set-defaults.sh`: macOS `defaults write` script, run by hand. `adv360/`: keyboard layout notes. `vscode/`: unmanaged.
+- `claude/`: local Claude Code plugin marketplace (`ty-lsp`, which Claude uses for Python). Not applied by `switch`; set up once per machine with `claude plugin marketplace add <checkout>/claude && claude plugin install ty-lsp@dotfiles`. The other LSP plugins come from `claude-plugins-official` and use the Nix-installed servers.
 
 ### Which files are live vs. built
 

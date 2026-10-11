@@ -58,7 +58,6 @@ in
     gopls
     lua-language-server
     marksman
-    pyright # for the Claude Code pyright-lsp plugin; nvim uses ty
     ruff # also the python formatter
     terraform-ls
     ty

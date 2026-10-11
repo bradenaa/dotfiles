@@ -1,0 +1,16 @@
+{
+  "name": "ty-lsp",
+  "description": "Python type checking and code intelligence via ty (Astral). ty comes from Nix (home/common.nix).",
+  "version": "1.0.0",
+  "author": { "name": "Braden Altstatt" },
+  "lspServers": {
+    "ty": {
+      "command": "ty",
+      "args": ["server"],
+      "extensionToLanguage": {
+        ".py": "python",
+        ".pyi": "python"
+      }
+    }
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
+  "name": "dotfiles",
+  "description": "Claude Code plugins from these dotfiles",
+  "owner": { "name": "Braden Altstatt" },
+  "plugins": [
+    {
+      "name": "ty-lsp",
+      "description": "Python type checking and code intelligence via ty (Astral)",
+      "source": "./plugins/ty-lsp"
+    }
+  ]
+}
