@@ -7,4 +7,8 @@
   # Only CLI tools come from Nix; GPU apps stay on pacman, so skip the
   # Mesa/driver shim (it also needs a one-time sudo setup script).
   targets.genericLinux.gpu.enable = false;
+
+  # One systemd-managed agent per login (sets SSH_AUTH_SOCK via
+  # hm-session-vars.sh, which zshenv sources).
+  services.ssh-agent.enable = true;
 }

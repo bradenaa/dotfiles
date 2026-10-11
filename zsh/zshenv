@@ -1,0 +1,33 @@
+# Linked to ~/.zshenv by home-manager. Read by every zsh (interactive or not),
+# so keep it to environment setup; interactive config goes in zshrc.
+
+export EDITOR='nvim'
+export VISUAL='nvim'
+export PAGER='less'
+
+export XDG_DATA_HOME="${XDG_DATA_HOME:-$HOME/.local/share}"
+export ZDOTDIR="$HOME/.config/zsh"
+
+export HISTFILE="$XDG_DATA_HOME/zsh/history"
+export HISTSIZE=10000
+export SAVEHIST=10000
+
+# Nix. The installer only hooks interactive/login shells; sourcing it here
+# covers scripts and tools too. Both files guard against double sourcing.
+if [ -e /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh ]; then
+  . /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh
+fi
+if [ -e "$HOME/.nix-profile/etc/profile.d/hm-session-vars.sh" ]; then
+  . "$HOME/.nix-profile/etc/profile.d/hm-session-vars.sh"
+fi
+
+# Linux: use the systemd ssh-agent from home/linux.nix. Override any inherited
+# socket (e.g. a stale one in tmux's environment), except in SSH sessions so
+# agent forwarding still works. macOS's launchd agent sets this itself.
+if [ -z "$SSH_CONNECTION" ] && [ -S "$XDG_RUNTIME_DIR/ssh-agent" ]; then
+  export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/ssh-agent"
+fi
+
+typeset -U path PATH
+path=(~/.local/bin ~/.cargo/bin $path)
+export PATH
