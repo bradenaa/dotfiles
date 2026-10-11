@@ -55,6 +55,7 @@ require('which-key').setup {
   -- Key names use Nerd Font glyphs by default; set icons.keys if that's off.
   icons = { mappings = vim.g.have_nerd_font },
   spec = {
+    { '<leader>g', group = '[G]it' },
     { '<leader>s', group = '[S]earch' },
     { '<leader>t', group = '[T]oggle' },
     { '<leader>h', group = 'Git [H]unk', mode = { 'n', 'v' } },
