@@ -47,7 +47,7 @@ home-manager switch --rollback         # undo last switch
 - Configs are linked with `mkOutOfStoreSymlink` (the `link` helper in `home/common.nix` / `home/shell.nix`), pointing at the repo checkout. Edits to linked files apply immediately; package, link and `home/*.nix` changes need a `switch`.
 - If a `switch` reports that an existing file would be clobbered, rerun with `-b backup` to move it aside.
 - tmux plugins are loaded by `home/tmux.nix` *after* `tmux/tmux.conf` (not via home-manager's `plugins` option, which loads them first). prefix-highlight and continuum rewrite `status-right`, so it must be set before they run.
-- zsh is the system zsh (login shell); only its config is managed. `zsh/zshenv` sources the Nix profile and `hm-session-vars.sh` so non-interactive shells see Nix tools too.
+- zsh is the system zsh (login shell); only its config is managed. `zsh/zshenv` sources the Nix profile and `hm-session-vars.sh` so non-interactive shells see Nix tools too. It is linked at both `~/.zshenv` and `~/.config/zsh/.zshenv`, because it sets `ZDOTDIR` and child shells (tmux panes, scripts) inherit that.
 - Rust comes from `rustup` (run `rustup default stable && rustup component add rust-analyzer` once per machine). Don't add `rustfmt`/`rust-analyzer` packages; they collide with rustup's proxies.
 - New files must be `git add`ed before Nix can see them (flakes only read tracked files).
 - The Intel Mac uses `nixpkgs-26.05-darwin` because nixpkgs dropped x86_64-darwin after 26.05. Packages added to `common.nix` must also exist there.

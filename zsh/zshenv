@@ -4,6 +4,8 @@
 export EDITOR='nvim'
 export VISUAL='nvim'
 export PAGER='less'
+# Pass colors through (glow -p, piped tool output); same flags git uses when LESS is unset.
+export LESS='-FRX'
 
 export XDG_DATA_HOME="${XDG_DATA_HOME:-$HOME/.local/share}"
 export ZDOTDIR="$HOME/.config/zsh"
