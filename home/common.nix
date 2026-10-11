@@ -46,6 +46,7 @@ in
     neovim
     tree-sitter # nvim-treesitter compiles parsers with this
     gnumake # telescope-fzf-native build
+    glow # render markdown in the terminal: `glow README.md`
 
     # Search
     ripgrep
