@@ -12,7 +12,10 @@ in
 {
   home.packages = [ pkgs.starship ];
 
+  # zshenv sets ZDOTDIR, and child shells (tmux panes, scripts) inherit it, so
+  # they look for zshenv there instead of in ~.
   home.file.".zshenv".source = link "zsh/zshenv";
+  xdg.configFile."zsh/.zshenv".source = link "zsh/zshenv";
   xdg.configFile."zsh/.zshrc".source = link "zsh/zshrc";
   xdg.configFile."starship.toml".source = link "starship/starship.toml";
   xdg.configFile."ghostty/config".source = link "ghostty/config";
