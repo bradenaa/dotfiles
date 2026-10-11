@@ -1,6 +1,7 @@
 # Shared by every machine.
 {
   config,
+  lib,
   pkgs,
   dotfiles,
   ...
@@ -22,6 +23,15 @@ in
   home.stateVersion = "26.05";
 
   programs.home-manager.enable = true;
+
+  # Linked configs point into the checkout; a wrong `dotfiles` path in
+  # flake.nix would otherwise leave every link dangling without any error.
+  home.activation.checkDotfiles = lib.hm.dag.entryBefore [ "checkLinkTargets" ] ''
+    if [ ! -e "${dotfiles}/flake.nix" ]; then
+      errorEcho "dotfiles checkout not found at ${dotfiles}; set 'dotfiles' for this machine in flake.nix"
+      exit 1
+    fi
+  '';
 
   home.packages = with pkgs; [
     # Toolchains. Rust comes from rustup (`rustup default stable` once per

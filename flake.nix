@@ -29,9 +29,10 @@
           modules,
           nixpkgs ? inputs.nixpkgs,
           home-manager ? inputs.home-manager,
-          # Where this repo is cloned. Configs are symlinked here (not copied
-          # into the Nix store) so edits apply without a rebuild.
-          dotfiles ? "${homeDirectory}/code/dotfiles",
+          # Absolute path to this repo's checkout on that machine. Configs are
+          # symlinked here (not copied into the Nix store) so edits apply
+          # without a rebuild. `switch` fails if it doesn't contain flake.nix.
+          dotfiles,
         }:
         home-manager.lib.homeManagerConfiguration {
           pkgs = import nixpkgs {
@@ -51,29 +52,33 @@
         };
     in
     {
-      # Apply with: home-manager switch --flake ~/code/dotfiles#<name>
+      # Apply with: home-manager switch --flake <dotfiles>#<name>
       homeConfigurations = {
         arch = mkHome {
           system = "x86_64-linux";
           username = "braden";
           homeDirectory = "/home/braden";
+          dotfiles = "/home/braden/code/dotfiles";
           modules = [ ./home/linux.nix ];
         };
 
-        # TODO: confirm username on this machine (`whoami`).
+        # TODO: confirm username (`whoami`) and clone path on this machine.
         personal-mac = mkHome {
           system = "x86_64-darwin";
           username = "braden";
           homeDirectory = "/Users/braden";
+          dotfiles = "/Users/braden/code/dotfiles";
           modules = [ ./home/darwin.nix ];
           nixpkgs = inputs.nixpkgs-intel-darwin;
           home-manager = inputs.home-manager-intel-darwin;
         };
 
+        # TODO: confirm clone path on this machine.
         work-mac = mkHome {
           system = "aarch64-darwin";
           username = "baltstatt";
           homeDirectory = "/Users/baltstatt";
+          dotfiles = "/Users/baltstatt/code/dotfiles";
           modules = [ ./home/darwin.nix ];
         };
       };

@@ -12,11 +12,14 @@ Neovim, zsh, tmux, git and dev tooling for my machines, managed with
 ## New machine
 
 1. Install Nix: `curl -fsSL https://install.determinate.systems/nix | sh -s -- install`
-2. Clone: `git clone git@github.com:bradenaa/dotfiles.git ~/code/dotfiles`
+2. Clone anywhere, e.g. `git clone git@github.com:bradenaa/dotfiles.git ~/code/dotfiles`.
+   Make sure that machine's `dotfiles = "..."` entry in `flake.nix` is the
+   absolute clone path (`switch` refuses to run if it isn't).
 3. Apply (moves any existing conflicting files to `*.backup`):
 
    ```sh
-   nix run home-manager/master -- switch -b backup --flake ~/code/dotfiles#<name>
+   cd <clone path>
+   nix run home-manager/master -- switch -b backup --flake .#<name>
    ```
 
 4. One-time setup:
@@ -30,8 +33,9 @@ Neovim, zsh, tmux, git and dev tooling for my machines, managed with
 ## Day to day
 
 ```sh
-home-manager switch --flake ~/code/dotfiles#<name>   # apply changes
-nix flake update && home-manager switch --flake ...  # update everything
+# from the repo root
+home-manager switch --flake .#<name>                 # apply changes
+nix flake update && home-manager switch --flake .#<name>  # update everything
 home-manager switch --rollback                        # undo
 ```
 

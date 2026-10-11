@@ -8,7 +8,7 @@ Personal dotfiles for three machines, managed with Nix + home-manager:
 | `work-mac`       | Apple Silicon Mac  | `aarch64-darwin` | unstable                    |
 | `personal-mac`   | Intel Mac          | `x86_64-darwin`  | 26.05 (frozen; see below)   |
 
-The repo is expected to be cloned at `~/code/dotfiles` on every machine.
+The clone location can differ per machine. Each `mkHome` entry sets `dotfiles` to its absolute checkout path; linked configs point there, and an activation check in `home/common.nix` aborts `switch` if that path has no `flake.nix`. Don't hardcode `~/code/dotfiles` anywhere else.
 
 ## Layout
 
@@ -37,9 +37,10 @@ The repo is expected to be cloned at `~/code/dotfiles` on every machine.
 ## Applying changes
 
 ```sh
-home-manager switch --flake ~/code/dotfiles#<name>   # apply
-nix flake update                                      # bump all pinned versions
-home-manager switch --rollback                        # undo last switch
+# from the repo root
+home-manager switch --flake .#<name>   # apply
+nix flake update                       # bump all pinned versions
+home-manager switch --rollback         # undo last switch
 ```
 
 - Configs are linked with `mkOutOfStoreSymlink` (the `link` helper in `home/common.nix` / `home/shell.nix`), pointing at the repo checkout. Edits to linked files apply immediately; package, link and `home/*.nix` changes need a `switch`.
@@ -77,7 +78,7 @@ Requires Neovim 0.12+. No plugin-manager framework.
 Run a copy of the config in isolation without touching the live one:
 
 ```sh
-ln -sfn ~/code/dotfiles/nvim ~/.config/nvim-next
+ln -sfn "$PWD/nvim" ~/.config/nvim-next   # from the repo root
 NVIM_APPNAME=nvim-next nvim --headless +qa        # should print nothing
 NVIM_APPNAME=nvim-next nvim +'checkhealth vim.pack vim.lsp'
 ```
