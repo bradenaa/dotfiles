@@ -3,8 +3,9 @@
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 
--- Set to true if a Nerd Font is installed and selected in the terminal.
-vim.g.have_nerd_font = false
+-- Icons in the statusline, which-key, Telescope and diagnostic signs. Ghostty
+-- bundles the Nerd Font symbols; other terminals need a Nerd Font selected.
+vim.g.have_nerd_font = true
 
 vim.o.number = true
 vim.o.relativenumber = true
