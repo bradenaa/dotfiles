@@ -29,6 +29,7 @@ in
     # `rustup component add`.
     go
     nodejs
+    pnpm
     rustup
 
     # Editor
