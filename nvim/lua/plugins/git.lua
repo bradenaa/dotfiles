@@ -4,6 +4,12 @@ vim.pack.add {
   'https://github.com/lewis6991/gitsigns.nvim',
 }
 
+-- :GBrowse prefers a :Browse command; without one it falls back to calling
+-- netrw#BrowseX with two arguments, which nvim 0.12's netrw rejects (E118).
+vim.api.nvim_create_user_command('Browse', function(opts)
+  vim.ui.open(opts.args)
+end, { nargs = 1, desc = 'Open a URL in the browser' })
+
 -- [[ fugitive ]]
 -- In the status window: - stage/unstage, = inline diff, cc commit, ca amend,
 -- dv vertical diff, X discard, czz/czp stash/pop, g? help.
